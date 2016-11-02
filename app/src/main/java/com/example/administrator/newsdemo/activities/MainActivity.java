@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                 break;
         }
     }
+    
     @Override
     public void onFragmentInteraction(String docId) {
         BrowserActivity.start(this,docId);
