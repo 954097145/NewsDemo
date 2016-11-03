@@ -20,7 +20,6 @@ public class ADVpager extends PagerAdapter{
     private List<NetEase.Ad> list;
 
     public ADVpager(List<NetEase.Ad> list) {
-
         this.list = list;
     }
 
@@ -43,13 +42,11 @@ public class ADVpager extends PagerAdapter{
 
     @Override
     public int getCount() {
-
         return Integer.MAX_VALUE;
     }
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-
         return view == object;
     }
 }

@@ -61,13 +61,11 @@ public class Xhttp {
 
             @Override
             public void onCancelled(CancelledException cex) {
-
                 Log.d(TAG, "onCancelled: ");
             }
 
             @Override
             public void onFinished() {
-
                 Log.d(TAG, "onFinished: ");
             }
         };
@@ -105,13 +103,11 @@ public class Xhttp {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
                 Log.d(TAG, "onError: ");
             }
 
             @Override
             public void onCancelled(CancelledException cex) {
-
                 Log.d(TAG, "onCancelled: ");
             }
 

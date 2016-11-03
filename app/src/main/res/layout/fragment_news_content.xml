@@ -6,6 +6,27 @@
               android:orientation="vertical"
               tools:context=".fragment.NewsContentFragment">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titlebar_height"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <!--标题栏，右侧用图片button弹出菜单-->
+        <ImageView
+            android:id="@+id/btn_popUp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="center"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="end"
+            android:layout_marginRight="@dimen/titlebar_margin_right"
+            android:maxWidth="60dp"
+            android:src="@drawable/news_menu_selector"/>
+    </RelativeLayout>
+
     <WebView
         android:id="@+id/webView1"
         android:layout_width="match_parent"

@@ -14,22 +14,26 @@ import com.viewpagerindicator.TabPageIndicator;
 
 import butterknife.BindView;
 
+import static com.example.administrator.newsdemo.R.id.indicator;
+import static com.example.administrator.newsdemo.R.id.pager;
+
 /**
  * Created by Administrator on 2016/10/28.
  */
 
 public class HomeFragment extends BaseFragment {
-    @BindView(R.id.indicator)
+    @BindView(indicator)
     TabPageIndicator mIndicator;
-    @BindView(R.id.pager)
+    @BindView(pager)
     ViewPager mPager;
     private NewsTypesPagerAdapter adapter;
 
+    //首页碎片：新闻的分类的viewpager：
     @Override
     protected void initData() {
-        Bundle bundle=getArguments();
-        NewsType type= (NewsType) bundle.getSerializable(MainActivity.KEY_TYPELIST);
-        adapter = new NewsTypesPagerAdapter(getFragmentManager(),type);
+        Bundle bundle = getArguments();
+        NewsType type = (NewsType) bundle.getSerializable(MainActivity.KEY_TYPELIST);
+        adapter = new NewsTypesPagerAdapter(getFragmentManager(), type);
         mPager.setAdapter(adapter);
         mIndicator.setViewPager(mPager);
     }

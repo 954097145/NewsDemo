@@ -24,18 +24,15 @@ import butterknife.ButterKnife;
 
 public class NetEaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public NetEaseAdapter(List<NetEase> dataList) {
-
         this.dataList = dataList;
     }
 
     public List<NetEase> getDataList() {
-
         return dataList;
     }
 
 
     public void setDataList(List<NetEase> dataList) {
-
         this.dataList = dataList;
     }
 
@@ -48,12 +45,10 @@ public class NetEaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     public void addData(NetEase netEase) {
-
         dataList.add(netEase);
     }
 
     public void addData(int position, NetEase netEase) {
-
         dataList.add(position, netEase);
     }
 
@@ -188,7 +183,6 @@ public class NetEaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
      * @param currentState
      */
     public void setCurrentState(int currentState) {
-
         this.currentState = currentState;
     }
 
@@ -286,7 +280,6 @@ public class NetEaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemCount() {
-
         return dataList == null ? 0 : dataList.size() + 1;
     }
     //5个holder ，对应5种视图：

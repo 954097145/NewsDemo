@@ -1,18 +1,14 @@
 package com.example.administrator.newsdemo.entity;
 
-import java.util.List;
+import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2016/10/29.
  */
 
-public class NetEase {
-    public NetEase(List<Ad> ads, String alias, String boardid, String cid, String digest,
-                   String docid, String ename, int hasAD, boolean hasCover, int hasHead,
-                   boolean hasIcon, int hasImg, List<ImgExtra> imgextra, String imgsrc,
-                   int imgsum, String lmodify, int order, String photosetID, String postid,
-                   int priority, String ptime, int replyCount, String skipID, String skipType,
-                   String source, String template, String title, String tname, String votecount) {
+public class NetEase implements Serializable {
+    public NetEase(ArrayList<Ad> ads, String alias, String boardid, String cid, String digest, String docid, String ename, int hasAD, boolean hasCover, int hasHead, boolean hasIcon, int hasImg, ArrayList<ImgExtra> imgextra, String imgsrc, int imgsum, String lmodify, int order, String photosetID, String postid, int priority, String ptime, int replyCount, String skipID, String skipType, String source, String template, String title, String tname, String votecount) {
         this.ads = ads;
         this.alias = alias;
         this.boardid = boardid;
@@ -79,7 +75,7 @@ public class NetEase {
                 '}';
     }
 
-    public List<Ad> ads;
+    public ArrayList<Ad> ads;
     public String alias;
     public String boardid;
     public String cid;
@@ -91,7 +87,7 @@ public class NetEase {
     public int hasHead;
     public boolean hasIcon;
     public int hasImg;
-    public List<ImgExtra> imgextra;
+    public ArrayList<ImgExtra> imgextra;
     public String imgsrc;
     public int imgsum;
     public String lmodify;
@@ -108,7 +104,7 @@ public class NetEase {
     public String title;
     public String tname, votecount;
 
-    public class Ad {
+    public class Ad implements Serializable {
         public String imgsrc;
         public String subtitle;
         public String tag;
@@ -135,7 +131,7 @@ public class NetEase {
         }
     }
 
-    public class ImgExtra {
+    public class ImgExtra implements Serializable{
         public String imgsrc;
 
         @Override

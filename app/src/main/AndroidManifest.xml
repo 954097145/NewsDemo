@@ -27,7 +27,8 @@
         <activity android:name=".activities.LogoActivity"
                   android:theme="@style/AppThemeFull">
         </activity>
-        <activity android:name=".activities.BrowserActivity">
+        <activity android:name=".activities.BrowserActivity"
+                  android:theme="@style/AppThemeNoActionbar">
         </activity>
     </application>
 

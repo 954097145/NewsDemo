@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.administrator.newsdemo.R;
+import com.example.administrator.newsdemo.entity.NetEase;
 import com.example.administrator.newsdemo.fragment.NewsContentFragment;
 
 /**
@@ -15,13 +16,14 @@ import com.example.administrator.newsdemo.fragment.NewsContentFragment;
 
 public class BrowserActivity extends AppCompatActivity{
     public static final String KEY_DOCID = "docId";
+    public static final String KEY_NETEASE = "NETEASE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browser);
         //将docId交给显示新闻内容的碎片
-        replaceFragment(NewsContentFragment.newInstance(getIntent().getStringExtra(KEY_DOCID)),false);
+        replaceFragment(NewsContentFragment.newInstance((NetEase) getIntent().getSerializableExtra(KEY_NETEASE)),false);
     }
     //是否添加到返回栈
     public void replaceFragment(Fragment f,boolean isAddtoBackStack) {
@@ -32,9 +34,11 @@ public class BrowserActivity extends AppCompatActivity{
         tr.commit();
     }
 
-    public static void start(Context context, String docId) {
+    //NetEase要传值需要先序列化，并且集合要使用ArrayList /LinkedList
+    public static void start(Context context, NetEase netEase) {
         Intent starter = new Intent(context, BrowserActivity.class);
-        starter.putExtra(KEY_DOCID, docId);
+        starter.putExtra(KEY_DOCID, netEase.docid);
+        starter.putExtra(KEY_NETEASE,netEase);
         context.startActivity(starter);
     }
 }

@@ -3,31 +3,28 @@ package com.example.administrator.newsdemo.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import com.example.administrator.newsdemo.R;
-import com.example.administrator.newsdemo.adapter.NetEaseAdapter;
-import com.example.administrator.newsdemo.base.BaseFragment;
-import com.example.administrator.newsdemo.base.LazyBaseFragment;
-import com.example.administrator.newsdemo.biz.Xhttp;
-import com.example.administrator.newsdemo.common.CommonUrls;
-import com.example.administrator.newsdemo.entity.NetEase;
-import com.example.administrator.newsdemo.view.RecycleViewDivider;
-
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
-
+import com.example.administrator.newsdemo.R;
+import com.example.administrator.newsdemo.adapter.NetEaseAdapter;
+import com.example.administrator.newsdemo.base.LazyBaseFragment;
+import com.example.administrator.newsdemo.biz.Xhttp;
+import com.example.administrator.newsdemo.common.CommonUrls;
+import com.example.administrator.newsdemo.entity.NetEase;
+import com.example.administrator.newsdemo.view.RecycleViewDivider;
 
 import java.util.List;
 import java.util.TimerTask;
 
 import butterknife.BindView;
 
-public class NewsListFragment extends LazyBaseFragment implements SwipeRefreshLayout.OnRefreshListener,
+public class NewsListFragment extends LazyBaseFragment
+        implements SwipeRefreshLayout.OnRefreshListener,
         NetEaseAdapter.OnItemClickListener{
     private static final String KEY_TID = "key_tid";
     private static final String KEY_TNAME = "key_tname";
@@ -78,13 +75,8 @@ public class NewsListFragment extends LazyBaseFragment implements SwipeRefreshLa
             mNetEaseAdapter = new NetEaseAdapter(neteaseNews);
             mNetEaseAdapter.setOnItemClickListener(NewsListFragment.this);
             mRecyclerView1.setAdapter(mNetEaseAdapter);
-            //必须要设置一个布局管理器 //listview,gridview,瀑布流
             layoutManager = new LinearLayoutManager(getContext());
             mRecyclerView1.setLayoutManager(layoutManager);
-            //   mRecyclerView1.setLayoutManager(new GridLayoutManager(MainActivity.this,2));
-            // mRecyclerView1.setLayoutManager(new GridLayoutManager(MainActivity.this, 2, GridLayoutManager.HORIZONTAL, false));
-            //   mRecyclerView1.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-            //分割线
             mRecyclerView1.addItemDecoration(new RecycleViewDivider(getContext(), LinearLayoutManager.HORIZONTAL));
 
         }
@@ -96,6 +88,12 @@ public class NewsListFragment extends LazyBaseFragment implements SwipeRefreshLa
 
     }
 
+    @Override
+    protected void updateData() {
+        super.updateData();
+        Toast.makeText(getContext(), "刷新数据", Toast.LENGTH_SHORT).show();
+    }
+
     //实现懒加载后的加载数据方法
     @Override
     protected boolean lazyLoad() {
@@ -104,7 +102,6 @@ public class NewsListFragment extends LazyBaseFragment implements SwipeRefreshLa
         //        pd.setMessage("正在加载，请稍候...");
         //        pd.setCancelable(false);
         //        pd.show();
-//        Log.d(TAG, "lazyLoad: 加载数据");
         Log.d(TAG, "lazyLoad: 加载数据");
         //        mTvText.setText(tid + "------" + tname);
         mSwipe1.setOnRefreshListener(this);
@@ -181,16 +178,16 @@ public class NewsListFragment extends LazyBaseFragment implements SwipeRefreshLa
         //list点击事件：传递docid到浏览页面
         //当前fragment--->所在的Activity--->下一个Activity-->新闻内容碎片
 
-        onButtonPressed(mNetEaseAdapter.getDataList().get(position).docid);
+        onButtonPressed(mNetEaseAdapter.getDataList().get(position));
     }
 
-    public void onButtonPressed(String docid) {
+    public void onButtonPressed(NetEase netEase) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(docid);
+            mListener.onFragmentInteraction(netEase);
         }
     }
 
     public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(String docId);
+        void onFragmentInteraction(NetEase netEase);
     }
 }

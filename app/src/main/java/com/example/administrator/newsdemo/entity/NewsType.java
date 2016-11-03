@@ -11,9 +11,8 @@ import java.util.ArrayList;
 public class NewsType implements Serializable {
     public ArrayList<SubName> tList;
 
-    public NewsType(ArrayList<SubName> tList){
-
-        this.tList=tList;
+    public NewsType(ArrayList <SubName> tList) {
+        this.tList = tList;
     }
 
     public static class SubName  implements Serializable{

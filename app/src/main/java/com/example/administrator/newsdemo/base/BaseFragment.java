@@ -19,41 +19,40 @@ import butterknife.ButterKnife;
 public abstract class BaseFragment extends Fragment {
     private View rootView;
 
-    public BaseFragment(){}
+    public BaseFragment() {
+        // Required empty public constructor
+    }
 
     protected static String TAG="dyx_BaseFragment";
-    
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, 
-                             Bundle saveInstanceState){
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
         Log.d(TAG, "onCreateView: ");
-        if (rootView==null){
-            rootView=inflater.inflate(getLayoutId(),null);
-            ButterKnife.bind(this,rootView);
+        if (rootView == null) {
+            rootView = inflater.inflate(getLayoutId(), null);
+            ButterKnife.bind(this, rootView);
             initData();
         }
-
-
         return rootView;
     }
 
-//    @Override
-//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-//        super.onActivityCreated(savedInstanceState);
-//        initData();
-//    }
 
     protected abstract void initData();
+
     protected abstract int getLayoutId();
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         Log.d(TAG, "onDestroyView: ");
-        if (rootView!=null){
-            ViewGroup parent= (ViewGroup) rootView.getParent();
-            if (parent!=null){
+        //判断rootview是否被添加到某个父容器当中了，如果添加了，从父容器移除
+        if (rootView != null) {
+            ViewGroup parent = (ViewGroup) rootView.getParent();
+            if (parent != null) {
                 parent.removeView(rootView);
-                //Toast.makeText(getContext(), parent+""+rootView, Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(getContext(), parent+"移除了"+rootView, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -61,7 +60,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        TAG=""+getClass().getSimpleName();
+        TAG = "dyx_" + getClass().getSimpleName();
         Log.d(TAG, "onAttach: ");
     }
 
@@ -70,6 +69,7 @@ public abstract class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate: ");
     }
+
 
     @Override
     public void onStart() {
@@ -94,6 +94,7 @@ public abstract class BaseFragment extends Fragment {
         super.onStop();
         Log.d(TAG, "onStop: ");
     }
+
 
     @Override
     public void onDestroy() {

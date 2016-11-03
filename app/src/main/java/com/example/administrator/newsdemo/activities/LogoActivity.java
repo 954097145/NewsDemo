@@ -42,7 +42,7 @@ public class LogoActivity extends AppCompatActivity implements Xhttp.NewsTypeLis
 
     @Override
     public void onFinish() {
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         MainActivity.start(this, newsType);
         finish();
     }

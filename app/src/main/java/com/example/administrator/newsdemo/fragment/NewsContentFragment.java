@@ -4,12 +4,19 @@ import com.example.administrator.newsdemo.R;
 import com.example.administrator.newsdemo.activities.BrowserActivity;
 import com.example.administrator.newsdemo.base.BaseFragment;
 import com.example.administrator.newsdemo.biz.Xhttp;
+import com.example.administrator.newsdemo.db.DBManager;
+import com.example.administrator.newsdemo.entity.NetEase;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
+import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.Toast;
+import butterknife.BindView;
+import butterknife.OnClick;
 
 
 import butterknife.BindView;
@@ -20,17 +27,21 @@ import butterknife.BindView;
 public class NewsContentFragment extends BaseFragment {
     @BindView(R.id.webView1)
     WebView mWebView1;
+    @BindView(R.id.btn_popUp)
+    ImageView mBtnPopUp;
     private String mDocId;
+    private String db_str;//需要数据库保存的字符串
+    private NetEase db_netEase;//数据库保存的netease对象
 
 
     public NewsContentFragment() {
-
     }
 
-    public static NewsContentFragment newInstance(String docId) {
+    public static NewsContentFragment newInstance(NetEase netEase) {
         NewsContentFragment fragment = new NewsContentFragment();
         Bundle args = new Bundle();
-        args.putString(BrowserActivity.KEY_DOCID, docId);
+        args.putSerializable(BrowserActivity.KEY_NETEASE,netEase);
+        args.putString(BrowserActivity.KEY_DOCID, netEase.docid);
         fragment.setArguments(args);
         return fragment;
     }
@@ -40,6 +51,7 @@ public class NewsContentFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mDocId = getArguments().getString(BrowserActivity.KEY_DOCID);
+            db_netEase= (NetEase) getArguments().getSerializable(BrowserActivity.KEY_NETEASE);
         }
     }
 
@@ -89,6 +101,8 @@ public class NewsContentFragment extends BaseFragment {
             @Override
             public void onFinish(String str) {
                 mWebView1.loadDataWithBaseURL(null, str, "text/html", "utf-8", null);
+                //字符串保存为全局对象，需要收藏时使用。
+                db_str = str;
             }
         });
     }
@@ -110,5 +124,40 @@ public class NewsContentFragment extends BaseFragment {
                 "    img.style.maxWidth = '100%';   " +
                 "}" +
                 "})()");
+    }
+
+
+    @OnClick(R.id.btn_popUp)
+    public void onClick() {
+        //        弹出菜单：
+        PopupMenu popup = new PopupMenu(getActivity(), mBtnPopUp);
+        //Inflating the Popup using xml file
+        popup.getMenuInflater()
+                .inflate(R.menu.popmenu, popup.getMenu());
+
+        //registering popup with OnMenuItemClickListener
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_favor:
+                        //NetEase对象由点击事件和docid一并传入，或只传递netease。
+                        //字符串在第一次获取过后保存了全局引用。
+                        long i= DBManager.getDBManager(getContext()).insertNewsData(db_netEase,db_str);
+                        if (i>0){
+                            Toast.makeText(getContext(), "收藏成功", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(getContext(), "收藏失败", Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    case R.id.menu_share:
+                        break;
+                    case R.id.menu_comment:
+                        break;
+                }
+                return true;
+            }
+        });
+
+        popup.show(); //showing popup menu
     }
 }
